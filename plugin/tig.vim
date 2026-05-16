@@ -43,6 +43,10 @@ if has('nvim')
     setlocal norelativenumber
     setlocal signcolumn=no
     setlocal filetype=tig
+    let s:save_mouse = &mouse
+    set mouse=
+    autocmd BufLeave,BufWipeout <buffer> let &mouse = s:save_mouse
+    autocmd BufEnter <buffer> set mouse= | startinsert
     startinsert
   endfunction
 
