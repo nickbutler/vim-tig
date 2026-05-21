@@ -45,6 +45,7 @@ if has('nvim')
       \ 'style':    'minimal',
       \ 'border':   'rounded',
       \ })
+    setlocal winhighlight=Normal:CursorLine,NormalFloat:CursorLine
 
     if a:bang > 0
       call s:tigopen(current)
