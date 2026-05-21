@@ -35,6 +35,23 @@ Show commit log of current file:
 :Tig!
 ```
 
+Show blame view of current file:
+```
+:Tig! blame
+```
+
+You can also manually craft tig commands by using variable expansion:
+
+* `%` will expand to the current file path
+* `+` will expand to the current line number (prefixed with `+` so that tig
+  will jump to that line)
+
+```
+:Tig! blame +
+:Tig blame + -- %
+```
+(These two actually result in the same tig command line being executed.)
+
 Configuration
 -------------
 Tig executable: `let g:tig_executable = 'tig'`
