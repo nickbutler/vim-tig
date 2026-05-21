@@ -31,10 +31,12 @@ if has('nvim')
       call termopen(g:tig_executable . ' ' . a:arg, s:callback)
     endfunction
 
-    let width  = &columns - g:tig_margin * 2
-    let height = &lines   - g:tig_margin * 2
-    let col    = g:tig_margin
-    let row    = g:tig_margin
+    let hmargin = g:tig_margin
+    let vmargin = g:tig_margin / 2
+    let width   = &columns - hmargin * 2
+    let height  = &lines   - vmargin * 2
+    let col     = hmargin
+    let row     = vmargin
     let buf    = nvim_create_buf(v:false, v:true)
     call nvim_open_win(buf, v:true, {
       \ 'relative': 'editor',
