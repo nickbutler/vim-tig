@@ -11,8 +11,8 @@ if has('nvim')
     let g:tig_on_exit = 'bw!'
   endif
 
-  if !exists('g:tig_open_command')
-    let g:tig_open_command = 'enew'
+  if !exists('g:tig_margin')
+    let g:tig_margin = 5
   endif
 
   function! s:tig(bang, ...)
@@ -31,7 +31,21 @@ if has('nvim')
       call termopen(g:tig_executable . ' ' . a:arg, s:callback)
     endfunction
 
-    exec g:tig_open_command
+    let width  = &columns - g:tig_margin * 2
+    let height = &lines   - g:tig_margin * 2
+    let col    = g:tig_margin
+    let row    = g:tig_margin
+    let buf    = nvim_create_buf(v:false, v:true)
+    call nvim_open_win(buf, v:true, {
+      \ 'relative': 'editor',
+      \ 'width':    width,
+      \ 'height':   height,
+      \ 'col':      col,
+      \ 'row':      row,
+      \ 'style':    'minimal',
+      \ 'border':   'rounded',
+      \ })
+
     if a:bang > 0
       call s:tigopen(current)
     elseif a:0 > 0
