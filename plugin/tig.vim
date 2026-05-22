@@ -29,6 +29,8 @@ if has('nvim')
       \ 'row':      vmargin,
       \ 'style':    'minimal',
       \ 'border':   'rounded',
+      \ 'title':    ' tig ',
+      \ 'title_pos': 'center',
       \ }
   endfunction
 
