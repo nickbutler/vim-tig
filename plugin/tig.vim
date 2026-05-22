@@ -15,6 +15,8 @@ if has('nvim')
     let g:tig_margin = 5
   endif
 
+  highlight default link TigFloat CursorLine
+
   function! s:tig_win_config()
     let hmargin = g:tig_margin
     let vmargin = g:tig_margin / 2
@@ -56,7 +58,7 @@ if has('nvim')
 
     let buf = nvim_create_buf(v:false, v:true)
     let s:tig_win = nvim_open_win(buf, v:true, s:tig_win_config())
-    setlocal winhighlight=Normal:CursorLine,NormalFloat:CursorLine
+    setlocal winhighlight=Normal:TigFloat,NormalFloat:TigFloat
 
     augroup TigResize
       autocmd!

@@ -42,6 +42,11 @@ Tig command to run: `let g:tig_default_command = 'status'`
 Vim command to run on tig exit: `let g:tig_on_exit = 'bw!'`
 Floating window margin (columns/rows): `let g:tig_margin = 5`
 
+The floating window background defaults to the `CursorLine` highlight group. Override it by defining `TigFloat` in your config:
+```vim
+highlight TigFloat guibg=#1e1e1e
+```
+
 Contributing
 ------------
 1. Fork it!
