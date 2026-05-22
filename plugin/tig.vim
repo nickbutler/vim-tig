@@ -41,6 +41,11 @@ if has('nvim')
   endfunction
 
   function! s:tig(bang, ...)
+    if exists('s:tig_win') && nvim_win_is_valid(s:tig_win)
+      call nvim_set_current_win(s:tig_win)
+      return
+    endif
+
     let s:callback = {}
     let current = expand('%')
     let s:altfile = expand('#')
