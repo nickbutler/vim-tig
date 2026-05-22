@@ -47,6 +47,11 @@ The floating window background defaults to the `CursorLine` highlight group. Ove
 highlight TigFloat guibg=#1e1e1e
 ```
 
+The border defaults to `TigFloat`. Override it independently with `TigFloatBorder`:
+```vim
+highlight TigFloatBorder guifg=#555555 guibg=#1e1e1e
+```
+
 Contributing
 ------------
 1. Fork it!
