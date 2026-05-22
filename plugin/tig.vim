@@ -15,12 +15,35 @@ if has('nvim')
     let g:tig_margin = 5
   endif
 
+  function! s:tig_win_config()
+    let hmargin = g:tig_margin
+    let vmargin = g:tig_margin / 2
+    return {
+      \ 'relative': 'editor',
+      \ 'width':    &columns - hmargin * 2,
+      \ 'height':   &lines   - vmargin * 2,
+      \ 'col':      hmargin,
+      \ 'row':      vmargin,
+      \ 'style':    'minimal',
+      \ 'border':   'rounded',
+      \ }
+  endfunction
+
+  function! s:tig_resize()
+    if nvim_win_is_valid(s:tig_win)
+      call nvim_win_set_config(s:tig_win, s:tig_win_config())
+    endif
+  endfunction
+
   function! s:tig(bang, ...)
     let s:callback = {}
     let current = expand('%')
     let s:altfile = expand('#')
 
     function! s:callback.on_exit(id, status, event)
+      augroup TigResize
+        autocmd!
+      augroup END
       exec g:tig_on_exit
       if !empty(s:altfile)
         let @# = s:altfile
@@ -31,23 +54,14 @@ if has('nvim')
       call termopen(g:tig_executable . ' ' . a:arg, s:callback)
     endfunction
 
-    let hmargin = g:tig_margin
-    let vmargin = g:tig_margin / 2
-    let width   = &columns - hmargin * 2
-    let height  = &lines   - vmargin * 2
-    let col     = hmargin
-    let row     = vmargin
-    let buf    = nvim_create_buf(v:false, v:true)
-    call nvim_open_win(buf, v:true, {
-      \ 'relative': 'editor',
-      \ 'width':    width,
-      \ 'height':   height,
-      \ 'col':      col,
-      \ 'row':      row,
-      \ 'style':    'minimal',
-      \ 'border':   'rounded',
-      \ })
+    let buf = nvim_create_buf(v:false, v:true)
+    let s:tig_win = nvim_open_win(buf, v:true, s:tig_win_config())
     setlocal winhighlight=Normal:CursorLine,NormalFloat:CursorLine
+
+    augroup TigResize
+      autocmd!
+      autocmd VimResized * call s:tig_resize()
+    augroup END
 
     if a:bang > 0
       call s:tigopen(current)
